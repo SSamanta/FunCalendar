@@ -14,53 +14,21 @@
 @implementation ViewController
 @synthesize eventListsTableview;
 @synthesize eventStore,eventsList,selectedCalendar;
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Release any cached data, images, etc that aren't in use.
-}
-
 #pragma mark - View lifecycle
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     self.eventStore = [[EKEventStore alloc] init];
     self.eventsList = [[NSMutableArray alloc] init];
    
 }
 
-- (void)viewDidUnload
-{
+- (void)viewDidUnload {
     [self setEventListsTableview:nil];
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-	[super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-	[super viewDidDisappear:animated];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
@@ -225,49 +193,40 @@
 }
 #pragma mark -
 #pragma mark UIActionSheetDelegate
-- (void)actionSheet:(UIActionSheet *)sender clickedButtonAtIndex:(int)index
-{
-    if (sender.tag==0)
-    {
-        if (index == 0) 
-        {
+- (void)actionSheet:(UIActionSheet *)sender clickedButtonAtIndex:(int)index {
+    if (sender.tag==0){
+        if (index == 0) {
             AddCustomEvent *addCustomEvent = [self.storyboard instantiateViewControllerWithIdentifier:@"addCustomEvent"];
             addCustomEvent.eventStore = self.eventStore;
             addCustomEvent.addCustomEventDelegate = self;
             [self.navigationController pushViewController:addCustomEvent animated:YES];
         } 
-        else if (index ==1)
-        {
+        else if (index ==1){
             EKEventEditViewController *addEventController = [[EKEventEditViewController alloc] initWithNibName:nil bundle:nil];
             addEventController.eventStore = self.eventStore;
             [self presentModalViewController:addEventController animated:YES];
             addEventController.editViewDelegate = self;
         }
-        else if (index ==2)
-        {
+        else if (index ==2){
             
             
         }
     }
-    else if(sender.tag==1)
-    {
-        if (index == 0) 
-        {
+    else if(sender.tag==1){
+        if (index == 0) {
             CustomCalendarView *customCalendarView = [self.storyboard instantiateViewControllerWithIdentifier:@"customCalendar"];
             customCalendarView.eventStore=self.eventStore;
             UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:customCalendarView];
             [self presentModalViewController:navigationController animated:YES]; 
         } 
-        else if (index ==1)
-        {
+        else if (index ==1) {
             EKCalendarChooser *calendarChooser=[[EKCalendarChooser alloc] initWithSelectionStyle:EKCalendarChooserSelectionStyleSingle displayStyle:EKCalendarChooserDisplayAllCalendars eventStore:self.eventStore];
             calendarChooser.showsDoneButton = YES;
             calendarChooser.showsCancelButton = YES;
             calendarChooser.delegate = self;
             [self.navigationController pushViewController:calendarChooser animated:YES];
         }
-        else if (index == 2)
-        {
+        else if (index == 2){
             
             
         }
@@ -276,10 +235,8 @@
 }
 #pragma mark -
 #pragma mark AddCustomEventDelegate
--(void)updateEventList
-{
-    if (self.selectedCalendar)
-    {
+-(void)updateEventList {
+    if (self.selectedCalendar) {
         self.eventsList=[self fetchEventsByCalender:self.selectedCalendar];	
         [eventListsTableview reloadData];
     }

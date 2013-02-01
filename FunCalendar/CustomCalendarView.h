@@ -12,9 +12,6 @@
 #import "AddNewCalendar.h"
 
 @interface CustomCalendarView : UITableViewController<AddNewCalendarDelegate>
-{
-    
-}
 @property(nonatomic,strong) EKEventStore * eventStore;
 @property (weak, nonatomic) IBOutlet UITableView *calendarListTableView;
 @property(nonatomic,strong) NSMutableArray *calendarsList;
