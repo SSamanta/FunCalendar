@@ -1,0 +1,22 @@
+
+* Tapped Calendars, and without tapping anything tapped Done.  The
+app crashed (but it should not crash).
+* If you tap a row, there's a brief period of time where two rows
+are selected (the old and new row).  This is not standard behavior -
+it should be that when you tap a row only one is selected at a time.
+* Table view rows should show dates of events along with names
+* Project should also demonstrate:
+* Creating calendars (from Calendars page, remove done button and
+add a + there)
+* Deleting calendar entries (swipe to delete on the table view
+cells is fine)
+* Programatically creating events with eventWithEventStore:
+(tapping + button on main page should bring up a prompt - "add manual"
+or "add programattic")
+* Searching for events to detect if programmatic event already
+added with enumerateEventsMatchingPredicate:usingBlock:.
+* Look through the EventKit guide for any functionality you have
+not already covered. Again, remember tutorials for this site need to
+be in-depth, not just basic coverage.
+
+Let me know when these are addressed and I'll take another look
