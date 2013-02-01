@@ -85,7 +85,7 @@
     cell = nil;
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        EKCalendar *calendar = [calendarsList objectAtIndex:indexPath.row];
+        EKCalendar *calendar = calendarsList[indexPath.row];
         cell.textLabel.text = calendar.title;
     }
     return cell;
@@ -95,11 +95,11 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
-        EKCalendar *deletedCalendar = [calendarsList objectAtIndex:indexPath.row];
+        EKCalendar *deletedCalendar = calendarsList[indexPath.row];
         NSError *error;
         if ([self.eventStore removeCalendar:deletedCalendar commit:YES error:&error]){
             [calendarsList removeObjectAtIndex:indexPath.row];
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         }
         else if(error){
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[error localizedDescription] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];

@@ -116,7 +116,7 @@
 }
 - (void)calendarChooserDidFinish:(EKCalendarChooser *)calendarChooser {
     NSArray *calendarsArray = [calendarChooser.selectedCalendars allObjects];
-    selectedCalendar = (EKCalendar *)[calendarsArray objectAtIndex:0];
+    selectedCalendar = (EKCalendar *)calendarsArray[0];
     calendarButton.titleLabel.text = [NSString stringWithFormat:@"Calendar : %@",selectedCalendar.title];
     [self.navigationController popViewControllerAnimated:YES];
 }

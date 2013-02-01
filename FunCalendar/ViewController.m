@@ -39,7 +39,7 @@
 	NSDate *endDate = [NSDate dateWithTimeIntervalSinceNow:86400*30];//next 30 days
     if (self.selectedCalendar)
     {
-        NSArray *calendarArray = [NSArray arrayWithObject:self.selectedCalendar];
+        NSArray *calendarArray = @[self.selectedCalendar];
         NSPredicate *predicate = [self.eventStore predicateForEventsWithStartDate:startDate endDate:endDate calendars:calendarArray];
         [eventStore enumerateEventsMatchingPredicate:predicate
                                           usingBlock:^(EKEvent *event, BOOL *stop) 
@@ -78,11 +78,11 @@
 	cell.accessoryType = editableCellAccessoryType;
     
 	// Get the event at the row selected and display it's title
-	cell.textLabel.text = [[self.eventsList objectAtIndex:indexPath.row] title];
+	cell.textLabel.text = [(self.eventsList)[indexPath.row] title];
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:@"dd/MM/yy hh:mma"];
-    NSString *startDate = [dateFormat stringFromDate:[[self.eventsList objectAtIndex:indexPath.row] startDate]];
-    NSString *endDate = [dateFormat stringFromDate:[[self.eventsList objectAtIndex:indexPath.row] endDate]];
+    NSString *startDate = [dateFormat stringFromDate:[(self.eventsList)[indexPath.row] startDate]];
+    NSString *endDate = [dateFormat stringFromDate:[(self.eventsList)[indexPath.row] endDate]];
     NSString *showtimings=[NSString stringWithFormat:@"Starts : %@\nEnds : %@",startDate,endDate];
     cell.detailTextLabel.text=showtimings;
     
@@ -92,7 +92,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath 
 {	
 	EKEventEditViewController *detailsEventView = [[EKEventEditViewController alloc] initWithNibName:nil bundle:nil];			
-	detailsEventView.event = [self.eventsList objectAtIndex:indexPath.row];
+	detailsEventView.event = (self.eventsList)[indexPath.row];
     detailsEventView.eventStore = self.eventStore;
     detailsEventView.editViewDelegate = self;
 	[self presentModalViewController:detailsEventView animated:YES];
@@ -182,7 +182,7 @@
 - (void)calendarChooserDidFinish:(EKCalendarChooser *)calendarChooser
 {
     NSArray *calendarsArray = [calendarChooser.selectedCalendars allObjects];
-    self.selectedCalendar = (EKCalendar *)[calendarsArray objectAtIndex:0];
+    self.selectedCalendar = (EKCalendar *)calendarsArray[0];
     self.eventsList = [self fetchEventsByCalender:self.selectedCalendar];
     [self.eventListsTableview reloadData];
     [self.navigationController popViewControllerAnimated:YES];
